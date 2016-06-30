@@ -16,7 +16,7 @@ import com.google.zxing.ResultPoint;
 import java.util.ArrayList;
 import java.util.List;
 
-import huhu.com.qrfore.R;
+import huhu.com.freeparking.R;
 
 
 public final class ViewfinderView extends View {

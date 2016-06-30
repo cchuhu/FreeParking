@@ -16,9 +16,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -42,14 +41,8 @@ import huhu.com.freeparking.zxing.ViewfinderView;
 
 
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
-    //闪光灯开关、手动签到开关
-    private ImageButton btn_torch, btn_handop;
-    //闪光灯是否开启标志位
-    private boolean isTorchOn = false;
     //相机管理器
     private CameraManager cameraManager;
-    //清零和停止按钮
-    private Button btn_clear, btn_stop;
     //显示人数的textView
     private TextView tv_num;
     //展示信息的popupwindow
@@ -61,9 +54,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         }
     };
-    //定义一个HashMap用于存放音频流的ID
 
-    //----------------------------------
     private CaptureActivityHandler handler;
     private Result savedResultToShow;
     private ViewfinderView viewfinderView;
@@ -102,26 +93,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
      * 初始化资源
      */
     private void initViews() {
-        btn_stop = (Button) findViewById(R.id.btn_stop);
-        btn_handop = (ImageButton) findViewById(R.id.btn_operation);
-        btn_torch = (ImageButton) findViewById(R.id.btn_torch);
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
-        //闪光灯按钮添加监听
-        btn_torch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isTorchOn) {
-                    isTorchOn = false;
-                    cameraManager.setTorch(false);
-                } else {
-                    isTorchOn = true;
-                    cameraManager.setTorch(true);
-                }
-            }
-        });
 
 
     }
@@ -131,12 +106,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     @Override
     protected void onResume() {
         super.onResume();
-
         cameraManager = new CameraManager(getApplication());
-
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
-
         handler = null;
         resetStatusView();
 
@@ -236,9 +208,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             msg = "�޷�ʶ��";
         }
         if (msg.equals("")) {
-
+            Toast.makeText(CaptureActivity.this, "无法识别", Toast.LENGTH_SHORT).show();
         } else {
             Log.e("msg", msg);
+            /**
+             * 在这里处理结果
+             */
             final String finalMsg = URLDecoder.decode(msg, "utf-8");
 
         }

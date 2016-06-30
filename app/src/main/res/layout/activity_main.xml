@@ -51,10 +51,20 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="欢迎回来，叮当！"
+            android:text="高新区万达商城停车场"
             android:textSize="25dp"/>
 
         <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="#efefef"
+            android:gravity="center"
+            android:text="15"/>
+
+        <TextView
+            android:id="@+id/tv_number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
