@@ -7,12 +7,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
-
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        <activity android:name=".Activity.MainActivity" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -20,6 +19,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Activity.PersonInfoActivity" >
+        </activity>
+        <activity android:name=".Activity.RegisterActivity" >
+        </activity>
+        <activity android:name=".Activity.ChangePassActivity" >
         </activity>
     </application>
 

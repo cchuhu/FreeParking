@@ -11,6 +11,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_login"
-    tools:context="huhu.com.freeparking.LoginActivity">
+    tools:context="huhu.com.freeparking.Activity.LoginActivity">
 
 </RelativeLayout>
