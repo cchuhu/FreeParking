@@ -34,7 +34,7 @@ public class PersonInfoWindow extends PopupWindow {
         this.name = name;
         this.tel = tel;
         this.job = job;
-        view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.pop_personinfo, null);
+        view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.popwindow, null);
 
         tv_name.setText(name);
         tv_job.setText(job);

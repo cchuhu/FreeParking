@@ -4,75 +4,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="huhu.com.freeparking.Activity.ChangePassActivity">
 
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#efefef"
+
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_personback"
+            android:layout_width="20dp"
+            android:layout_height="37dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/person_back"/>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:text="修改密码"
-            android:textSize="25dp"/>
+            android:textColor="#434465"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignBottom="@id/layout_title"
+        android:background="#09bdc5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
-        android:paddingTop="30dp">
+        >
 
-        <EditText
-            android:id="@+id/edt_previous_pass"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:hint="请输入原密码"/>
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
 
-        <EditText
-            android:id="@+id/edt_new_pass"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:hint="请输入新密码"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/change_old"/>
 
-        <EditText
-            android:id="@+id/edt_confirm_pass"
+            <EditText
+                android:id="@+id/edt_previous_pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="23dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入原密码"
+                android:textColorHint="#999999"/>
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:hint="请确认新密码"/>
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/change_new"/>
+
+            <EditText
+                android:id="@+id/edt_new_pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="23dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入新密码"
+                android:textColorHint="#999999"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/change_new"/>
+
+            <EditText
+                android:id="@+id/edt_confirm_pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="23dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入新密码"
+                android:textColorHint="#999999"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
 
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="确定修改"/>
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:textSize="15sp"
+            android:background="@mipmap/change_button"
+            android:text="确 定"
+            android:textColor="#ffffff"/>
 
     </LinearLayout>
 

@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/person_bg"
     tools:context="huhu.com.freeparking.Activity.PersonInfoActivity">
 
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#efefef"
+        android:background="#ffffff"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_personback"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="20dp"
+            android:layout_height="37dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="返回"/>
+            android:background="@mipmap/person_back"/>
 
         <TextView
             android:id="@+id/textView"
@@ -27,42 +28,47 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="叮当停车"
-            android:textSize="25dp"/>
+            android:text="个人中心"
+            android:textColor="#434465"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/btn_logoff"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="28dp"
+            android:layout_height="31dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/btn_personback"
             android:layout_marginRight="10dp"
-            android:text="注销"/>
+            android:background="@mipmap/person_logoff"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignBottom="@id/layout_title"
+        android:background="#09bdc5"/>
 
     <ImageView
         android:id="@+id/img_person_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
-        android:background="#efefef"/>
+        android:background="@mipmap/person_icon"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:orientation="vertical"
         android:paddingTop="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#efefef"
+            android:background="#ffffff"
             android:orientation="horizontal">
 
             <TextView
@@ -70,7 +76,10 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="账号:"/>
+                android:paddingLeft="10dp"
+                android:text="账 号:"
+                android:textColor="#09bdc5"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_personAccount"
@@ -78,13 +87,16 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="15165151661"/>
+                android:text="15165151661"
+                android:textColor="#999991"
+                android:textSize="16sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#efefef"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
             android:orientation="horizontal">
 
             <TextView
@@ -92,23 +104,33 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="姓名:"/>
+                android:paddingLeft="10dp"
+                android:text="姓 名:"
+                android:textColor="#09bdc5"
+                android:textSize="15sp"/>
 
             <EditText
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
+                android:background="@null"
                 android:gravity="center_vertical"
-                android:text="叮当"/>
+                android:text="叮当"
+                android:textColor="#999991"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
-            android:text="保存"/>
+            android:textSize="15sp"
+            android:background="@mipmap/person_button"
+            android:text="保存修改"
+            android:textColor="#ffffff"/>
 
     </LinearLayout>
 
@@ -120,6 +142,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_marginBottom="20dp"
-        android:text="修改密码"/>
+        android:background="@null"
+        android:text="修改密码"
+        android:textColor="#09bdc5"/>
 
 </RelativeLayout>

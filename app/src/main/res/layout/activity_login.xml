@@ -12,64 +12,104 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="70dp"
         android:background="#efefef"/>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical"
-        android:paddingTop="30dp">
+        android:paddingTop="20dp">
 
-        <EditText
-            android:id="@+id/edt_login_account"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:hint="请输入账号"/>
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
 
-        <EditText
-            android:id="@+id/edt_login_pass"
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="31dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/login_account"/>
+
+            <EditText
+                android:id="@+id/edt_login_account"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="23dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入账号"
+                android:textColorHint="#999999"/>
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:hint="请输入密码"/>
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/login_pass"/>
+
+            <EditText
+                android:id="@+id/edt_login_pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入密码"
+                android:textColorHint="#999999"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
+
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="登陆"/>
+            android:layout_height="40dp"
+            android:layout_marginTop="60dp"
+            android:background="@mipmap/login_button"
+            android:text="登 陆"
+            android:textColor="#ffffff"/>
 
     </LinearLayout>
 
-    <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_toregister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:text="注册账户"/>
-
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_toregister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/img_login_icon"
+        android:layout_alignStart="@+id/img_login_icon"
+        android:layout_below="@+id/linearLayout2"
+        android:background="@null"
+        android:text="注册账户"
+        android:textColor="#3ebdc6"/>
 
 
 </RelativeLayout>
