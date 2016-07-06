@@ -7,7 +7,7 @@ import huhu.com.freeparking.Util.NetConnection;
  * Created by Huhu on 7/6/16.
  */
 public class Login {
-    public Login(String url, final loginSuccess loginSuccess, final loginFailed loginFailed) {
+    public Login(String url, String mid, String mpwd, final loginSuccess loginSuccess, final loginFailed loginFailed) {
         new NetConnection(url, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String rt) {
@@ -18,7 +18,7 @@ public class Login {
             public void onFail() {
                 loginFailed.onFailed();
             }
-        });
+        }, "manager_id", mid, "manager_password", mpwd);
     }
 
     public interface loginSuccess {
