@@ -30,7 +30,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import huhu.com.freeparking.R;
-import huhu.com.freeparking.Widget.PersonInfoWindow;
+import huhu.com.freeparking.Widget.CheckWindow;
 import huhu.com.freeparking.zxing.AmbientLightManager;
 import huhu.com.freeparking.zxing.BeepManager;
 import huhu.com.freeparking.zxing.CameraManager;
@@ -39,14 +39,16 @@ import huhu.com.freeparking.zxing.FinishListener;
 import huhu.com.freeparking.zxing.InactivityTimer;
 import huhu.com.freeparking.zxing.ViewfinderView;
 
-
+/**
+ * 二维码扫描的界面
+ */
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
     //相机管理器
     private CameraManager cameraManager;
     //显示人数的textView
     private TextView tv_num;
     //展示信息的popupwindow
-    private PersonInfoWindow personInfoWindow;
+    private CheckWindow personInfoWindow;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -231,7 +233,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         wm.getDefaultDisplay().getMetrics(outMetrics);
         int width = outMetrics.widthPixels - 100;
         int height = outMetrics.heightPixels / 2;
-        personInfoWindow = new PersonInfoWindow(name, phone, job, CaptureActivity.this, width, height);
+        personInfoWindow = new CheckWindow(name, phone, job, CaptureActivity.this, width, height);
         personInfoWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         personInfoWindow.setOutsideTouchable(true);
         //设置窗口2秒后自动消失

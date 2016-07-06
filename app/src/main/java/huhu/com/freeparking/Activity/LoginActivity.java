@@ -1,7 +1,9 @@
 package huhu.com.freeparking.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+
     }
 
     /**
@@ -39,6 +42,21 @@ public class LoginActivity extends Activity {
         edt_pass = (EditText) findViewById(R.id.edt_login_pass);
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_toregister);
+        setListener();
+    }
+
+    /**
+     * 设置监听器的方法
+     */
+    private void setListener() {
+        //为注册界面设置监听
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 }

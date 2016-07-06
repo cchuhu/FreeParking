@@ -13,7 +13,7 @@ import huhu.com.freeparking.R;
  * Created by Huhu on 5/5/16.
  * 展示签到人员信息的弹出菜单
  */
-public class PersonInfoWindow extends PopupWindow {
+public class CheckWindow extends PopupWindow {
     //弹窗视图
     private View view;
     //姓名 电话 工作职位 字符串
@@ -30,7 +30,7 @@ public class PersonInfoWindow extends PopupWindow {
      * @param tel  电话
      * @param job  工作职位
      */
-    public PersonInfoWindow(String name, String tel, String job, Context context, int width, int height) {
+    public CheckWindow(String name, String tel, String job, Context context, int width, int height) {
         this.name = name;
         this.tel = tel;
         this.job = job;
@@ -46,7 +46,7 @@ public class PersonInfoWindow extends PopupWindow {
 
             @Override
             public void onClick(View v) {
-                if (PersonInfoWindow.this.isShowing()) {
+                if (CheckWindow.this.isShowing()) {
                     dismiss();
                 }
             }
