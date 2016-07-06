@@ -8,25 +8,25 @@ import huhu.com.freeparking.Util.NetConnection;
  * 登陆首页获取头像的接口
  */
 public class GetIcon {
-    public GetIcon(String url, String mid, final onTokenSuccess onTokenSuccess, final onTokenFailed onTokenFailed) {
+    public GetIcon(String url, String mid, final getIconSuccess getIconSuccess, final getIconFailed getIconFailed) {
         new NetConnection(url, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String rt) {
-                onTokenSuccess.onSuccess(rt);
+                getIconSuccess.onSuccess(rt);
             }
         }, new NetConnection.FailCallback() {
             @Override
             public void onFail() {
-                onTokenFailed.onFailed();
+                getIconFailed.onFailed();
             }
         }, "manager_id", mid);
     }
 
-    public interface onTokenSuccess {
+    public interface getIconSuccess {
         void onSuccess(String result);
     }
 
-    public interface onTokenFailed {
+    public interface getIconFailed {
         void onFailed();
     }
 }
