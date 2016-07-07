@@ -37,6 +37,8 @@ public class LoginActivity extends Activity {
     private Button btn_register;
     //获取到的账号和密码
     private String account, pwd;
+    //头像图片的路径
+    private String manager_img;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -45,7 +47,8 @@ public class LoginActivity extends Activity {
                     JSONObject jo = null;
                     try {
                         jo = new JSONObject(msg.obj.toString());
-                        new GetIconBitmap(iv_icon).execute(jo.get("manager_img").toString().replace(" ", "%20"));
+                        manager_img = jo.get("manager_img").toString();
+                        new GetIconBitmap(iv_icon).execute(manager_img.replace(" ", "%20"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -98,6 +101,9 @@ public class LoginActivity extends Activity {
                                     if (result.equals("1")) {
                                         ToastBuilder.Build("登陆失败", LoginActivity.this);
                                     } else {
+                                        //先保存关键信息(账号、头像)
+                                        Constants.Manager_Account = account;
+                                        Constants.Manager_Icon = manager_img;
                                         //获取当天停车场车辆数量并跳转到主界面
                                         JSONObject jo = new JSONObject(result);
                                         Constants.CAR_COUNT = jo.get("car_count").toString();
