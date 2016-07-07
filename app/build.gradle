@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile files('libs/core-3.1.0.jar')
+    compile 'com.qiniu:qiniu-android-sdk:7.2.+'
 }
