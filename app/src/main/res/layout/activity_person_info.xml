@@ -87,7 +87,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="15165151661"
+                android:text="null"
                 android:textColor="#999991"
                 android:textSize="16sp"/>
         </LinearLayout>

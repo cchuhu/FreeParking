@@ -23,5 +23,6 @@ public class Config {
     public static final String URL_CHECK = "http://139.129.24.127/parking_app/ParkingLot/ScanQR.php";
     //获取停车数量接口
     public static final String URL_GETCOUNT = "http://139.129.24.127/parking_app/ParkingLot/GetCount.php";
-
+    //获取个人信息接口
+    public static final String URL_GETINFO = "http://139.129.24.127/parking_app/ParkingLot/GetManagerInfo.php";
 }

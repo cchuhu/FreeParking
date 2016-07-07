@@ -1,11 +1,21 @@
 package huhu.com.freeparking.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import huhu.com.freeparking.Network.GetInfo;
 import huhu.com.freeparking.R;
+import huhu.com.freeparking.Util.Config;
+import huhu.com.freeparking.Util.Constants;
+import huhu.com.freeparking.Util.NetworkState;
+import huhu.com.freeparking.Util.ToastBuilder;
 
 /**
  * 登陆后的主界面，显示通车数量
@@ -23,6 +33,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
     }
 
     /**
@@ -33,5 +44,55 @@ public class MainActivity extends Activity {
         btn_qrscan = (Button) findViewById(R.id.btn_qrscan);
         tv_count = (TextView) findViewById(R.id.tv_count);
         tv_number = (TextView) findViewById(R.id.tv_number);
+        setListener();
+        //设置首页数据
+        tv_count.setText(Constants.CAR_COUNT);
+        tv_number.setText(Constants.CAR_COUNT);
+    }
+
+    /**
+     * 设置监听器
+     */
+    private void setListener() {
+        //为个人中心界面设置监听器
+        btn_personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (NetworkState.isOnline(MainActivity.this)) {
+                    new GetInfo(Config.URL_GETINFO, Constants.Manager_Account, new GetInfo.getInfoSuccess() {
+                        @Override
+                        public void onSuccess(String result) {
+                            try {
+                                JSONObject jo = new JSONObject(result);
+                                Constants.Manager_Name = jo.get("manager_name").toString();
+                                Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
+                                startActivity(i);
+                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                MainActivity.this.finish();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new GetInfo.getInfoFailed() {
+                        @Override
+                        public void onFailed() {
+
+                        }
+                    });
+                } else {
+                    ToastBuilder.Build("无法获取个人信息，请连网", MainActivity.this);
+                }
+
+
+            }
+        });
+        //为二维码扫描界面设置监听器
+        btn_qrscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 }
