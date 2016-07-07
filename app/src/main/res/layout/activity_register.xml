@@ -145,6 +145,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入密码"
+                android:inputType="textPassword"
                 android:textColorHint="#999999"/>
         </LinearLayout>
 
@@ -177,6 +178,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请确认密码"
+                android:inputType="textPassword"
                 android:textColorHint="#999999"/>
         </LinearLayout>
 
@@ -194,9 +196,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayout3"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
         android:background="@mipmap/register_save"
         android:text="完成注册"
         android:textColor="#ffffff"/>
