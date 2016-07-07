@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -30,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import huhu.com.freeparking.Network.GetToken;
+import huhu.com.freeparking.Network.Register;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
 import huhu.com.freeparking.Util.CutImageUtil;
@@ -59,6 +63,25 @@ public class RegisterActivity extends Activity {
     //打开本地相册的类型
     private final String IMAGE_TYPE = "image/*";
     private int IMAGE_CODE = 1;
+    /**
+     * 0:上传图片
+     * 1：图片上传成功，上传资料
+     */
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    uploadPic(str_token);
+                    break;
+                case 1:
+                    uploadInfo();
+                    break;
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +117,7 @@ public class RegisterActivity extends Activity {
                 isOnline = NetworkState.isOnline(RegisterActivity.this);
                 if (isOnline) {
                     //上传资料注册
-                    uploadInfo();
+                    uploadInit();
                 }
                 //如果网络不可用，弹出提示框
                 else {
@@ -114,14 +137,33 @@ public class RegisterActivity extends Activity {
     }
 
     /**
-     * 上传注册资料，先获取token上传头像，再上传资料
+     * 上传全部信息，注册用户
      */
     private void uploadInfo() {
+        new Register(Config.URL_REGISTER, str_url, str_account, str_name, str_pwd, new Register.registerSuccess() {
+            @Override
+            public void onSuccess(String result) {
+                ToastBuilder.Build("注册成功！", RegisterActivity.this);
+
+            }
+        }, new Register.registerFailed() {
+            @Override
+            public void onFailed() {
+                ToastBuilder.Build("注册失败！", RegisterActivity.this);
+            }
+        }) {
+
+        };
+
+    }
+
+    /**
+     * 上传注册资料，先获取token上传头像，再上传资料
+     */
+    private void uploadInit() {
         if (isNotNull()) {
-            //首先获取上传图片的token,上传图片到七牛
-            getTokenAndUploadPic();
-
-
+            //获取上传图片的token,上传图片到七牛
+            getToken();
         } else {
             Log.e("资料不完善", "不能上传");
         }
@@ -141,7 +183,9 @@ public class RegisterActivity extends Activity {
         uploadManager.put(filename, getIMEI() + getTime(), token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
-                Log.e("qiniu", info + "");
+                Message msg = new Message();
+                msg.what = 1;
+                mHandler.sendMessage(msg);
 
             }
         }, null);
@@ -162,7 +206,7 @@ public class RegisterActivity extends Activity {
         str_conpwd = edt_register_conpass.getText().toString();
         str_name = edt_register_name.getText().toString();
         //先检查文字资料是否齐全
-        if (str_account.equals("") || str_name.equals("") || str_pwd.equals("") || str_conpwd.equals("")) {
+        if (str_account.equals("") || str_name.equals("") || str_pwd.equals("") || str_conpwd.equals("") || filename.equals("")) {
             ToastBuilder.Build("请完善资料！", RegisterActivity.this);
         } else {
             //如果密码与确认密码不匹配，提示
@@ -182,13 +226,22 @@ public class RegisterActivity extends Activity {
      *
      * @return
      */
-    private String getTokenAndUploadPic() {
-
+    private void getToken() {
+        //获取token
         new GetToken(Config.URL_GETOKEN, new GetToken.onTokenSuccess() {
             @Override
             public void onSuccess(String result) {
-                str_token = result;
-                uploadPic(result);
+                JSONObject jo = null;
+                try {
+                    jo = new JSONObject(result);
+                    str_token = jo.getString("uptoken");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Message msg = new Message();
+                msg.what = 0;
+                mHandler.sendMessage(msg);
+
             }
         }, new GetToken.onTokenFailed() {
             @Override
@@ -197,7 +250,7 @@ public class RegisterActivity extends Activity {
                 str_token = "error";
             }
         });
-        return str_token;
+
     }
 
     /**
