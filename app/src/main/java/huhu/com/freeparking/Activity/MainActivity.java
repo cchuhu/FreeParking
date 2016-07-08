@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
                                 Constants.Manager_Name = jo.get("manager_name").toString();
                                 Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
                                 startActivity(i);
-                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                                 MainActivity.this.finish();
                             } catch (JSONException e) {
                                 e.printStackTrace();

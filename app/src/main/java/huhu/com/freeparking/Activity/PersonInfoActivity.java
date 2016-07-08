@@ -71,7 +71,7 @@ public class PersonInfoActivity extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(PersonInfoActivity.this, MainActivity.class);
                 startActivity(i);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 PersonInfoActivity.this.finish();
             }
         });
