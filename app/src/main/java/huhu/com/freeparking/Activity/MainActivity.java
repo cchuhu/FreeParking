@@ -3,7 +3,6 @@ package huhu.com.freeparking.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import huhu.com.freeparking.Network.GetCarCount;
 import huhu.com.freeparking.Network.GetInfo;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
@@ -35,7 +35,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        Log.e("执行onCreate", "生命周期");
     }
 
 
@@ -43,6 +42,28 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         //获取停车数量
+        new GetCarCount(Config.URL_GETCOUNT, new GetCarCount.getSuccess() {
+            @Override
+            public void onSuccess(String result) {
+                JSONObject jo = null;
+                try {
+                    jo = new JSONObject(result);
+                    Constants.CAR_COUNT = jo.get("car_count").toString();
+                    //设置首页数据
+                    tv_count.setText(Constants.CAR_COUNT);
+                    tv_number.setText(Constants.CAR_COUNT);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new GetCarCount.getFailed() {
+            @Override
+            public void onFailed() {
+
+            }
+        });
     }
 
 
@@ -75,6 +96,7 @@ public class MainActivity extends Activity {
                             try {
                                 JSONObject jo = new JSONObject(result);
                                 Constants.Manager_Name = jo.get("manager_name").toString();
+                                Constants.Manager_Icon = jo.get("manager_img").toString();
                                 Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
                                 startActivity(i);
                                 overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);

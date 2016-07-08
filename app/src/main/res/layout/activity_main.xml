@@ -43,7 +43,11 @@
             android:layout_marginRight="10dp"
             android:background="@mipmap/page_qr"/>
     </RelativeLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignBottom="@id/layout_title"
+        android:background="#09bdc5"/>
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="373dp"

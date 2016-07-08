@@ -26,11 +26,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:text="修改密码"
             android:textColor="#434465"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 
@@ -73,6 +73,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入原密码"
+                android:inputType="textPassword"
                 android:textColorHint="#999999"/>
         </LinearLayout>
 
@@ -105,6 +106,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入新密码"
+                android:inputType="textPassword"
                 android:textColorHint="#999999"/>
         </LinearLayout>
 
@@ -137,6 +139,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入新密码"
+                android:inputType="textPassword"
                 android:textColorHint="#999999"/>
         </LinearLayout>
 
@@ -151,10 +154,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="80dp"
-            android:textSize="15sp"
             android:background="@mipmap/change_button"
             android:text="确 定"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 

@@ -63,6 +63,7 @@ public class RegisterActivity extends Activity {
     //打开本地相册的类型
     private final String IMAGE_TYPE = "image/*";
     private int IMAGE_CODE = 1;
+    private String flag;
     /**
      * 0:上传图片
      * 1：图片上传成功，上传资料
@@ -186,11 +187,12 @@ public class RegisterActivity extends Activity {
     private Boolean uploadPic(String token) {
         //获取图片唯一地址
         str_url = getIMEI() + getTime();
+        flag = str_url;
         str_url = str_url.replace(" ", "%20");
         str_url = str_url.replace(":", "%3A");
         str_url = str_Baseurl + str_url;
         UploadManager uploadManager = new UploadManager();
-        uploadManager.put(filename, getIMEI() + getTime(), token, new UpCompletionHandler() {
+        uploadManager.put(filename, flag, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
                 Message msg = new Message();
@@ -217,17 +219,22 @@ public class RegisterActivity extends Activity {
         str_name = edt_register_name.getText().toString();
         //先检查文字资料是否齐全
         if (str_account.equals("") || str_name.equals("") || str_pwd.equals("") || str_conpwd.equals("") || filename.equals("")) {
-            ToastBuilder.Build("请完善资料！", RegisterActivity.this);
+            ToastBuilder.Build("请完善资料", RegisterActivity.this);
+            return false;
         } else {
             //如果密码与确认密码不匹配，提示
             if (!str_pwd.equals(str_conpwd)) {
-                ToastBuilder.Build("请正确输入密码！", RegisterActivity.this);
+                ToastBuilder.Build("请正确输入密码", RegisterActivity.this);
+                return false;
             } else {
+                if (str_account.length() >= 15 || str_pwd.length() >= 15) {
+                    ToastBuilder.Build("账号密码的长度不能大于15位", RegisterActivity.this);
+                    return false;
+                }
                 return true;
             }
         }
 
-        return false;
     }
 
 
