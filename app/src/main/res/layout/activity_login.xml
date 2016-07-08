@@ -105,10 +105,10 @@
         android:id="@+id/btn_toregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/img_login_icon"
-        android:layout_alignStart="@+id/img_login_icon"
         android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
         android:background="@null"
+        android:textSize="15sp"
         android:text="注册账户"
         android:textColor="#3ebdc6"/>
 

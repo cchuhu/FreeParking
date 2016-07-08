@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="#f8f8f8">
 
         <ImageButton
@@ -33,6 +33,11 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignBottom="@id/relativeLayout"
+        android:background="#3ebdc6"/>
 
     <FrameLayout
         android:layout_width="match_parent"
