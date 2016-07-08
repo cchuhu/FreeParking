@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ import java.util.Date;
 
 import huhu.com.freeparking.Network.ChangeInfo;
 import huhu.com.freeparking.Network.GetIconBitmap;
+import huhu.com.freeparking.Network.GetInfo;
 import huhu.com.freeparking.Network.GetToken;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
@@ -75,6 +77,7 @@ public class PersonInfoActivity extends Activity {
     private String manager_name;
     //标识符
     private String flag;
+    private SharedPreferences sharedPreferences;
     /**
      * 0:上传图片
      * 1：图片上传成功，上传资料
@@ -99,6 +102,7 @@ public class PersonInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
+        sharedPreferences = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         initViews();
     }
 
@@ -121,9 +125,34 @@ public class PersonInfoActivity extends Activity {
      * 初始化数据资源
      */
     private void initSource() {
-        new GetIconBitmap(iv_person_icon).execute(Constants.Manager_Icon.replace(" ", "%20"));
-        tv_account.setText(Constants.Manager_Account);
-        edt_name.setText(Constants.Manager_Name);
+
+        if (NetworkState.isOnline(PersonInfoActivity.this)) {
+
+            new GetInfo(Config.URL_GETINFO, Constants.Manager_Account, new GetInfo.getInfoSuccess() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+                        JSONObject jo = new JSONObject(result);
+                        Constants.Manager_Name = jo.get("manager_name").toString();
+                        Constants.Manager_Icon = jo.get("manager_img").toString();
+                        tv_account.setText(Constants.Manager_Account);
+                        edt_name.setText(Constants.Manager_Name);
+                        new GetIconBitmap(iv_person_icon).execute(Constants.Manager_Icon.replace(" ", "%20"));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new GetInfo.getInfoFailed() {
+                @Override
+                public void onFailed() {
+
+                }
+            });
+        } else {
+            ToastBuilder.Build("无法获取个人信息，请连网", PersonInfoActivity.this);
+        }
+
     }
 
     /**
@@ -164,6 +193,19 @@ public class PersonInfoActivity extends Activity {
                 Intent i = new Intent(PersonInfoActivity.this, ChangePassActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                PersonInfoActivity.this.finish();
+            }
+        });
+        btn_logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //删除已保存的密码
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                //跳转到登陆界面
+                Intent i = new Intent(PersonInfoActivity.this, LoginActivity.class);
+                startActivity(i);
                 PersonInfoActivity.this.finish();
             }
         });

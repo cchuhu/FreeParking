@@ -1,7 +1,9 @@
 package huhu.com.freeparking.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +41,8 @@ public class LoginActivity extends Activity {
     private String account, pwd;
     //头像图片的路径
     private String manager_img;
+    //记住密码功能 sharepreference
+    private SharedPreferences sharedPreferences;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -63,7 +67,10 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         initViews();
+
+
 
     }
 
@@ -77,6 +84,10 @@ public class LoginActivity extends Activity {
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_toregister);
         setListener();
+        String name = sharedPreferences.getString("account", "");
+        String pass = sharedPreferences.getString("password", "");
+        edt_account.setText(name);
+        edt_pass.setText(pass);
     }
 
     /**
@@ -104,6 +115,8 @@ public class LoginActivity extends Activity {
                                         //先保存关键信息(账号、头像)
                                         Constants.Manager_Account = account;
                                         Constants.Manager_Icon = manager_img;
+                                        //将账号密码存入sp
+                                        autoLogin(account, pwd);
                                         //获取当天停车场车辆数量并跳转到主界面
                                         JSONObject jo = new JSONObject(result);
                                         Constants.CAR_COUNT = jo.get("car_count").toString();
@@ -167,6 +180,15 @@ public class LoginActivity extends Activity {
             }
         });
 
+
+    }
+
+    //设置自动登录的方法
+    private void autoLogin(String account, String pwd) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("account", account);
+        editor.putString("password", pwd);
+        editor.commit();
     }
 
 }

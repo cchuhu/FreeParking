@@ -34,13 +34,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.PersonInfoActivity">
-        </activity>
-        <activity android:name=".Activity.RegisterActivity">
-        </activity>
-        <activity android:name=".Activity.ChangePassActivity">
-        </activity>
-        <activity android:name=".Activity.CaptureActivity"></activity>
+        <activity
+            android:name=".Activity.PersonInfoActivity"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".Activity.ChangePassActivity"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".Activity.CaptureActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

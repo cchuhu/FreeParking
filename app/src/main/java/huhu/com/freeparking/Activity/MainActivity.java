@@ -11,12 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import huhu.com.freeparking.Network.GetCarCount;
-import huhu.com.freeparking.Network.GetInfo;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
 import huhu.com.freeparking.Util.Constants;
-import huhu.com.freeparking.Util.NetworkState;
-import huhu.com.freeparking.Util.ToastBuilder;
 
 /**
  * 登陆后的主界面，显示通车数量
@@ -89,32 +86,11 @@ public class MainActivity extends Activity {
         btn_personal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (NetworkState.isOnline(MainActivity.this)) {
-                    new GetInfo(Config.URL_GETINFO, Constants.Manager_Account, new GetInfo.getInfoSuccess() {
-                        @Override
-                        public void onSuccess(String result) {
-                            try {
-                                JSONObject jo = new JSONObject(result);
-                                Constants.Manager_Name = jo.get("manager_name").toString();
-                                Constants.Manager_Icon = jo.get("manager_img").toString();
-                                Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
-                                startActivity(i);
-                                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new GetInfo.getInfoFailed() {
-                        @Override
-                        public void onFailed() {
 
-                        }
-                    });
-                } else {
-                    ToastBuilder.Build("无法获取个人信息，请连网", MainActivity.this);
-                }
-
-
+                Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                MainActivity.this.finish();
             }
         });
         //为二维码扫描界面设置监听器
@@ -124,6 +100,7 @@ public class MainActivity extends Activity {
                 Intent i = new Intent(MainActivity.this, CaptureActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                MainActivity.this.finish();
 
 
             }

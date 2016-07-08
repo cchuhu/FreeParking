@@ -1,6 +1,8 @@
 package huhu.com.freeparking.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,11 +22,13 @@ public class ChangePassActivity extends AppCompatActivity {
     private Button btn_back, btn_save;
     private EditText edt_prepass, edt_newpass, edt_conpass;
     private String str_previous_pass, str_new_pass, str_conpass;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
+        sharedPreferences = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         initViews();
     }
 
@@ -64,6 +68,11 @@ public class ChangePassActivity extends AppCompatActivity {
                             public void onSuccess(String result) {
                                 if (result.equals("0")) {
                                     ToastBuilder.Build("修改成功,请重新登录", ChangePassActivity.this);
+                                    //删除已保存的密码
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.clear();
+                                    editor.commit();
+                                    //跳转到主界面
                                     Intent i = new Intent(ChangePassActivity.this, LoginActivity.class);
                                     startActivity(i);
                                     ChangePassActivity.this.finish();
