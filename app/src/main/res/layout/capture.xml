@@ -14,11 +14,11 @@
             android:id="@+id/btn_back"
             android:layout_width="20dp"
             android:layout_height="37dp"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/person_back"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/person_back"/>
 
         <TextView
             android:id="@+id/textView"
@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"/>
 
-        <zxing.ViewfinderView
+        <huhu.com.freeparking.zxing.ViewfinderView
             android:id="@+id/viewfinder_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"/>

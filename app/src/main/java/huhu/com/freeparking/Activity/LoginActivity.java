@@ -156,6 +156,15 @@ public class LoginActivity extends Activity {
             }
 
         });
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+
+            }
+        });
 
     }
 

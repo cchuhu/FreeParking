@@ -3,6 +3,7 @@ package huhu.com.freeparking.Activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         }
     };
+    //返回按钮
+    private ImageButton btn_back;
 
     private CaptureActivityHandler handler;
     private Result savedResultToShow;
@@ -99,6 +103,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CaptureActivity.this, MainActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                CaptureActivity.this.finish();
+            }
+        });
 
 
     }

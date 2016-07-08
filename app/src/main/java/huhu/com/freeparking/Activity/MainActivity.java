@@ -90,6 +90,10 @@ public class MainActivity extends Activity {
         btn_qrscan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, CaptureActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+
 
             }
         });

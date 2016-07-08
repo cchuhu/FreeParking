@@ -134,6 +134,14 @@ public class RegisterActivity extends Activity {
                 startActivityForResult(getAlbum, IMAGE_CODE);
             }
         });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+            }
+        });
     }
 
     /**
