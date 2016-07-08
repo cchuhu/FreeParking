@@ -31,7 +31,11 @@ import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Map;
 
+import huhu.com.freeparking.Network.CheckTicket;
 import huhu.com.freeparking.R;
+import huhu.com.freeparking.Util.Config;
+import huhu.com.freeparking.Util.NetworkState;
+import huhu.com.freeparking.Util.ToastBuilder;
 import huhu.com.freeparking.Widget.CheckWindow;
 import huhu.com.freeparking.zxing.AmbientLightManager;
 import huhu.com.freeparking.zxing.BeepManager;
@@ -50,11 +54,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     //显示人数的textView
     private TextView tv_num;
     //展示信息的popupwindow
-    private CheckWindow personInfoWindow;
+    private CheckWindow checkWindow;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            personInfoWindow.dismiss();
+            checkWindow.dismiss();
 
         }
     };
@@ -230,26 +234,65 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             /**
              * 在这里处理结果
              */
-            final String finalMsg = URLDecoder.decode(msg, "utf-8");
-
+            String ticket_id = URLDecoder.decode(msg, "utf-8");
+            if (NetworkState.isOnline(CaptureActivity.this)) {
+                checkTicket(ticket_id);
+            } else {
+                ToastBuilder.Build("请连接网络", CaptureActivity.this);
+            }
         }
-        restartPreviewAfterDelay(1000);
+        restartPreviewAfterDelay(3000);
 
     }
 
     /**
+     * 验证停车券是否合法
+     *
+     * @param id
+     */
+    private void checkTicket(String id) {
+        new CheckTicket(Config.URL_CHECK, id, new CheckTicket.checkSuccess() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.equals("0")) {
+                    showDetail(viewfinderView);
+                }
+                if (result.equals("1")) {
+                    ToastBuilder.Build("该停车券未绑定用户", CaptureActivity.this);
+                }
+                if (result.equals("2")) {
+                    ToastBuilder.Build("该停车券已使用", CaptureActivity.this);
+                }
+                if (result.equals("3")) {
+                    ToastBuilder.Build("该停车券已过期", CaptureActivity.this);
+                } else {
+                    ToastBuilder.Build("检测失败", CaptureActivity.this);
+                }
+
+            }
+        }, new CheckTicket.checkFailed() {
+            @Override
+            public void onFailed() {
+
+            }
+        });
+
+    }
+
+
+    /**
      * 显示弹出窗口
      */
-    private void showDetail(View view, String name, String phone, String job) {
+    private void showDetail(View view) {
         //设置弹出窗口
         WindowManager wm = (WindowManager) CaptureActivity.this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         int width = outMetrics.widthPixels - 100;
         int height = outMetrics.heightPixels / 2;
-        personInfoWindow = new CheckWindow(name, phone, job, CaptureActivity.this, width, height);
-        personInfoWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-        personInfoWindow.setOutsideTouchable(true);
+        checkWindow = new CheckWindow(CaptureActivity.this, width, height);
+        checkWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        checkWindow.setOutsideTouchable(true);
         //设置窗口2秒后自动消失
         mHandler.sendEmptyMessageDelayed(0, 2000);
     }

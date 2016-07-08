@@ -71,7 +71,6 @@ public class LoginActivity extends Activity {
         initViews();
 
 
-
     }
 
     /**
@@ -88,6 +87,24 @@ public class LoginActivity extends Activity {
         String pass = sharedPreferences.getString("password", "");
         edt_account.setText(name);
         edt_pass.setText(pass);
+        //如果有保存密码的功能，则立刻下载显示头像
+        if (!edt_account.getText().toString().equals("")) {
+            new GetIcon(Config.URL_GETICON, edt_account.getText().toString(), new GetIcon.getIconSuccess() {
+                @Override
+                public void onSuccess(String result) {
+                    //获取头像成功，去下载图片
+                    Message msg = new Message();
+                    msg.what = 0;
+                    msg.obj = result;
+                    mHandler.sendMessage(msg);
+                }
+            }, new GetIcon.getIconFailed() {
+                @Override
+                public void onFailed() {
+
+                }
+            });
+        }
     }
 
     /**
