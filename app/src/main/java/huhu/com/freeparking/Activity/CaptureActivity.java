@@ -297,4 +297,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public void drawViewfinder() {
         viewfinderView.drawViewfinder();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(CaptureActivity.this, MainActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        CaptureActivity.this.finish();
+    }
 }

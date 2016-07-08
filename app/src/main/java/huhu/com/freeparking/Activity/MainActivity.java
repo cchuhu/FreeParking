@@ -3,6 +3,7 @@ package huhu.com.freeparking.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,7 +35,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        Log.e("执行onCreate", "生命周期");
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取停车数量
+    }
+
 
     /**
      * 初始化界面布局
@@ -68,7 +78,6 @@ public class MainActivity extends Activity {
                                 Intent i = new Intent(MainActivity.this, PersonInfoActivity.class);
                                 startActivity(i);
                                 overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-                                MainActivity.this.finish();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -97,6 +106,12 @@ public class MainActivity extends Activity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
     }
 }

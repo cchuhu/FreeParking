@@ -139,7 +139,9 @@ public class RegisterActivity extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
+
                 overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                RegisterActivity.this.finish();
             }
         });
     }
@@ -328,5 +330,13 @@ public class RegisterActivity extends Activity {
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String IMEI = tm.getDeviceId();
         return IMEI;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        RegisterActivity.this.finish();
     }
 }

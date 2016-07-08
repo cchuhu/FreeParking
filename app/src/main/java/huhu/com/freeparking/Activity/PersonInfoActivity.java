@@ -76,4 +76,12 @@ public class PersonInfoActivity extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(PersonInfoActivity.this, MainActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+        PersonInfoActivity.this.finish();
+
+    }
 }

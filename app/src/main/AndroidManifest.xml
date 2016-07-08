@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activity.MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".Activity.LoginActivity"
