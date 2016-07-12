@@ -1,13 +1,17 @@
 package huhu.com.freeparking.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -64,6 +68,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     };
     //返回按钮
     private ImageButton btn_back;
+    //摄像头标志
+    private int REQUEST_CAMERA = 0;
 
     private CaptureActivityHandler handler;
     private Result savedResultToShow;
@@ -135,7 +141,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         if (hasSurface) {
-            initCamera(surfaceHolder);
+            getAppVersionAndTakePermission(surfaceHolder);
         } else {
             surfaceHolder.addCallback(this);
             surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -202,7 +208,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public void surfaceCreated(SurfaceHolder holder) {
         if (!hasSurface) {
             hasSurface = true;
-            initCamera(holder);
+            getAppVersionAndTakePermission(holder);
+            // initCamera(holder);
         }
     }
 
@@ -241,7 +248,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 ToastBuilder.Build("请连接网络", CaptureActivity.this);
             }
         }
-        restartPreviewAfterDelay(3000);
+        restartPreviewAfterDelay(1000);
 
     }
 
@@ -347,5 +354,36 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         startActivity(i);
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         CaptureActivity.this.finish();
+    }
+
+    //判断系统是否为6.0且获取权限(拍照)
+    public void getAppVersionAndTakePermission(SurfaceHolder holder) {
+
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        //若是大于6.0，则需代码获取权限
+        if (currentapiVersion >= 23) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+            } else {
+                initCamera(holder);
+            }
+        } else {//版本低于6.0
+            initCamera(holder);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //做什么？
+            } else {//拒绝了
+                Toast.makeText(CaptureActivity.this, "摄像头权限拒绝", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CaptureActivity.this, MainActivity.class);
+                startActivity(i);
+                CaptureActivity.this.finish();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
