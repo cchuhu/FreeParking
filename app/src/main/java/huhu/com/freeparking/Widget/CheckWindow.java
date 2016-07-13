@@ -10,7 +10,7 @@ import huhu.com.freeparking.R;
 
 /**
  * Created by Huhu on 5/5/16.
- * 展示签到人员信息的弹出菜单
+ * 展示停车信息是否成功的弹窗匡
  */
 public class CheckWindow extends PopupWindow {
     //弹窗视图
