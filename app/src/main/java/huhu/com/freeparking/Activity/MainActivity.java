@@ -3,6 +3,7 @@ package huhu.com.freeparking.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -41,7 +42,7 @@ public class MainActivity extends Activity {
     //设置 弹出窗口
     private ListWindow listWindow;
     //列表
-    private ArrayList<TicketBean> arrayList;
+    private ArrayList<TicketBean> arrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class MainActivity extends Activity {
         tv_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 new GetDetail(Config.URL_GETSUM, Constants.Manager_Account, new GetDetail.getSuccess() {
                     @Override
                     public void onSuccess(String result) {
@@ -147,9 +149,9 @@ public class MainActivity extends Activity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
+                            showDetail(tv_count, arrayList);
                         }
-                        showDetail(tv_count, arrayList);
+
                     }
                 }, new GetDetail.getFailed() {
                     @Override
@@ -176,6 +178,7 @@ public class MainActivity extends Activity {
         int height = outMetrics.heightPixels / 2;
         listWindow = new ListWindow(MainActivity.this, arrayList, width, height);
         listWindow.setFocusable(true);
+        listWindow.setBackgroundDrawable(new BitmapDrawable());
         backgroundAlpha(0.5f);
         listWindow.setOutsideTouchable(true);
         listWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {

@@ -8,7 +8,7 @@ import huhu.com.freeparking.Util.NetConnection;
  * 获取商家与停车券数量对应关系
  */
 public class GetDetail {
-    public GetDetail(String url, String manager_id, final getSuccess getSuccess, final getFailed getFailed) {
+    public GetDetail(String url, String manager_id,final getSuccess getSuccess, final getFailed getFailed) {
         new NetConnection(url, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String rt) {
@@ -19,7 +19,7 @@ public class GetDetail {
             public void onFail() {
                 getFailed.onFailed();
             }
-        }, "manager_id", manager_id);
+        },"gstmid",manager_id);
     }
 
     public interface getSuccess {

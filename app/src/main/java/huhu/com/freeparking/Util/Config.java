@@ -28,6 +28,6 @@ public class Config {
     //获取所有停车场信息
     public static final String URL_GETLOT = "http://139.129.24.127/parking_app/ParkingLot/GetParkLotInfos.php";
     //获取该停车场对应商家所消费的停车券数
-    public static final String URL_GETSUM = "http://139.129.24.127/parking_app/ParkingLot/GetSellerTickets.php";
+    public static final String URL_GETSUM = "http://139.129.24.127/parking_app/ParkingLot/gst.php";
 
 }

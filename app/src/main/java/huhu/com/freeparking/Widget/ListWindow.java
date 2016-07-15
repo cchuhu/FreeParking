@@ -35,6 +35,8 @@ public class ListWindow extends PopupWindow {
         //初始化视图
         listView = (ListView) view.findViewById(R.id.lv_detail);
         listView.setAdapter(new LotlistAdapter(context, arrayList));
+        setFocusable(true);
+        setOutsideTouchable(true);
         setHeight(height);
         setWidth(width);
         setContentView(view);
@@ -73,7 +75,7 @@ public class ListWindow extends PopupWindow {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             if (view == null) {
-                view = inflater.inflate(R.layout.parkiten, null);
+                view = inflater.inflate(R.layout.item, null);
             }
             TextView sname = (TextView) view.findViewById(R.id.tv_sname);
             TextView snum = (TextView) view.findViewById(R.id.tv_snum);
