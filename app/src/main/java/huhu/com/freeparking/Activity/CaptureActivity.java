@@ -259,7 +259,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
      * @param id
      */
     private void checkTicket(String id) {
-        new CheckTicket(Config.URL_CHECK, id, Constants.Manager_Account,new CheckTicket.checkSuccess() {
+        new CheckTicket(Config.URL_CHECK, id, Constants.Manager_Account, new CheckTicket.checkSuccess() {
             @Override
             public void onSuccess(String result) {
                 if (result.equals("0")) {
@@ -273,6 +273,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 }
                 if (result.equals("3")) {
                     ToastBuilder.Build("该停车券已过期", CaptureActivity.this);
+                }
+                if (result.equals("5")) {
+                    ToastBuilder.Build("该券不能在此使用", CaptureActivity.this);
                 } else {
                     ToastBuilder.Build("检测失败", CaptureActivity.this);
                 }
