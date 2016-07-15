@@ -8,7 +8,7 @@ import huhu.com.freeparking.Util.NetConnection;
  * 获取停车数量的工具类
  */
 public class GetCarCount {
-    public GetCarCount(String url, final getSuccess getSuccess, final getFailed getFailed) {
+    public GetCarCount(String url, String manager_id, final getSuccess getSuccess, final getFailed getFailed) {
         new NetConnection(url, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String rt) {
@@ -19,7 +19,7 @@ public class GetCarCount {
             public void onFail() {
                 getFailed.onFailed();
             }
-        });
+        }, "manager_id", manager_id);
     }
 
     public interface getSuccess {
