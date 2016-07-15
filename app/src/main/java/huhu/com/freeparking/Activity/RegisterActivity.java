@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,32 +15,43 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import huhu.com.freeparking.Network.GetLot;
 import huhu.com.freeparking.Network.GetToken;
 import huhu.com.freeparking.Network.Register;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
+import huhu.com.freeparking.Util.Constants;
 import huhu.com.freeparking.Util.CutImageUtil;
 import huhu.com.freeparking.Util.NetworkState;
 import huhu.com.freeparking.Util.ToastBuilder;
 import huhu.com.freeparking.Widget.BitmapBean;
+import huhu.com.freeparking.Widget.ParkListWindow;
+import huhu.com.freeparking.Widget.ParkLotBean;
 
 /**
  * 注册界面
@@ -48,6 +60,11 @@ public class RegisterActivity extends Activity {
     private Button btn_back, btn_regist;
     private EditText edt_register_acccount, edt_register_name, edt_register_pass, edt_register_conpass;
     private ImageView iv_register_icon;
+    private TextView tv_choosepark;
+    //停车场信息弹出框
+    private ParkListWindow listWindow;
+    //停车场信息数据
+    private ArrayList<ParkLotBean> list = new ArrayList<>();
     //token值
     private String str_token;
     //判断网络状况的标志位
@@ -92,6 +109,7 @@ public class RegisterActivity extends Activity {
 
     }
 
+
     /**
      * 初始化视图资源
      */
@@ -103,6 +121,7 @@ public class RegisterActivity extends Activity {
         edt_register_pass = (EditText) findViewById(R.id.edt_register_pass);
         edt_register_name = (EditText) findViewById(R.id.edt_register_name);
         iv_register_icon = (ImageView) findViewById(R.id.img_register_icon);
+        tv_choosepark = (TextView) findViewById(R.id.tv_choosepark);
         setListener();
     }
 
@@ -145,16 +164,108 @@ public class RegisterActivity extends Activity {
                 RegisterActivity.this.finish();
             }
         });
+        //选择停车场设置监听
+        tv_choosepark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new GetLot(Config.URL_GETLOT, new GetLot.getLotSuccess() {
+                    @Override
+                    public void onSuccess(String result) {
+                        try {
+                            if (result.equals("1")) {
+                                ToastBuilder.Build("获取失败", RegisterActivity.this);
+                            } else {
+                                JSONArray jsonArray = new JSONArray(result);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    //解析停车场数据
+                                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                                    ParkLotBean parkLotBean = new ParkLotBean();
+                                    parkLotBean.setLot_id(jsonObject.get("parklot_id").toString());
+                                    parkLotBean.setLot_address(jsonObject.get("parklot_address").toString());
+                                    list.add(parkLotBean);
+                                }
+                                //显示数据
+
+                                showWindow(tv_choosepark, list, tv_choosepark);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new GetLot.getLotFailed() {
+                    @Override
+                    public void onFailed() {
+
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+    /**
+     * 显示停车场信息的窗口
+     */
+    private void showWindow(View view, ArrayList<ParkLotBean> arrayList, TextView tv_choosepark) {
+        //设置弹出窗口
+        WindowManager wm = (WindowManager) RegisterActivity.this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        backgroundAlpha(0.5f);
+        int width = outMetrics.widthPixels - 100;
+        int height = outMetrics.heightPixels / 2;
+        listWindow = new ParkListWindow(RegisterActivity.this, arrayList, width, height, tv_choosepark);
+
+        listWindow.setOutsideTouchable(true);
+        listWindow.setFocusable(true);
+        listWindow.setBackgroundDrawable(new BitmapDrawable());
+        listWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+                list.clear();
+            }
+        });
+        //必须放在后面执行才能点击消失
+        listWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     /**
      * 上传全部信息，注册用户
      */
     private void uploadInfo() {
-        new Register(Config.URL_REGISTER, str_url, str_account, str_name, str_pwd, new Register.registerSuccess() {
+        new Register(Config.URL_REGISTER, str_url, str_account, str_name, str_pwd, Constants.Lot_id, new Register.registerSuccess() {
             @Override
             public void onSuccess(String result) {
-                ToastBuilder.Build("注册成功！", RegisterActivity.this);
+                switch (result) {
+                    case "0":
+                        ToastBuilder.Build("注册成功", RegisterActivity.this);
+                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        RegisterActivity.this.finish();
+                        break;
+                    case "1":
+                        ToastBuilder.Build("账号重复", RegisterActivity.this);
+                        break;
+                    case "2":
+                        ToastBuilder.Build("注册失败", RegisterActivity.this);
+                        break;
+                    case "3":
+                        ToastBuilder.Build("找不到停车场", RegisterActivity.this);
+                        break;
+                }
 
             }
         }, new Register.registerFailed() {
