@@ -13,4 +13,7 @@ public class Constants {
     public static String Manager_Name;
     //管理员头像图片
     public static String Manager_Icon;
+    //注册时选定的停车场id和地址
+    public static String Lot_id;
+    public static String Lot_address;
 }
