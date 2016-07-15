@@ -41,11 +41,12 @@
 
     <ImageView
         android:id="@+id/img_register_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
         android:background="@mipmap/person_icon"/>
+
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -56,6 +57,39 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/locate"/>
+
+            <TextView
+                android:id="@+id/tv_choosepark"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="23dp"
+                android:background="@null"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:text="点击选择停车场"
+                android:textColor="#999999"
+                />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3ebdc6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
