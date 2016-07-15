@@ -38,6 +38,7 @@ import java.util.Map;
 import huhu.com.freeparking.Network.CheckTicket;
 import huhu.com.freeparking.R;
 import huhu.com.freeparking.Util.Config;
+import huhu.com.freeparking.Util.Constants;
 import huhu.com.freeparking.Util.NetworkState;
 import huhu.com.freeparking.Util.ToastBuilder;
 import huhu.com.freeparking.Widget.CheckWindow;
@@ -258,7 +259,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
      * @param id
      */
     private void checkTicket(String id) {
-        new CheckTicket(Config.URL_CHECK, id, new CheckTicket.checkSuccess() {
+        new CheckTicket(Config.URL_CHECK, id, Constants.Manager_Account,new CheckTicket.checkSuccess() {
             @Override
             public void onSuccess(String result) {
                 if (result.equals("0")) {
