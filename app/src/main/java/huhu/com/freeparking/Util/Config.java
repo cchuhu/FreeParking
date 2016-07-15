@@ -25,4 +25,9 @@ public class Config {
     public static final String URL_GETCOUNT = "http://139.129.24.127/parking_app/ParkingLot/GetCount.php";
     //获取个人信息接口
     public static final String URL_GETINFO = "http://139.129.24.127/parking_app/ParkingLot/GetManagerInfo.php";
+    //获取所有停车场信息
+    public static final String URL_GETLOT = "http://139.129.24.127/parking_app/ParkingLot/GetParkLotInfos.php";
+    //获取该停车场对应商家所消费的停车券数
+    public static final String URL_GETSUM = "http://139.129.24.127/parking_app/ParkingLot/GetSellerTickets.php";
+
 }
